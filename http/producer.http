@@ -1,0 +1,39 @@
+### Calling direct exchange queue
+POST http://localhost:8080/v1/api/direct
+Content-Type: application/json
+
+{
+  "message": "Testing direct queue..."
+}
+
+### Calling fanout exchange queue
+POST http://localhost:8080/v1/api/fanout
+Content-Type: application/json
+
+{
+  "message": "Testing fanout queue..."
+}
+
+### Calling topic exchange queue 1
+POST http://localhost:8080/v1/api/topic1
+Content-Type: application/json
+
+{
+  "message": "Testing topic queue 1..."
+}
+
+### Calling topic exchange queue 2
+POST http://localhost:8080/v1/api/topic2
+Content-Type: application/json
+
+{
+  "message": "Testing topic queue 2..."
+}
+
+### Calling topic exchange queue 3
+POST http://localhost:8080/v1/api/topic3
+Content-Type: application/json
+
+{
+  "message": "Testing topic queue 3..."
+}

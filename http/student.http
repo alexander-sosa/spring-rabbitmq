@@ -1,0 +1,21 @@
+### Create a new student
+POST http://localhost:8080/v1/api/students
+Content-Type: application/json
+
+{
+  "name": "Rebeca",
+  "lastName": "Gomez",
+  "email": "rgomez@gmail.com"
+}
+
+### Get a specific student
+GET http://localhost:8080/v1/api/students/4
+Content-Type: application/json
+
+### General list
+GET http://localhost:8080/v1/api/students
+Content-Type: application/json
+
+### Paginated List
+GET http://localhost:8080/v1/api/students/paginate?page=0&size=20
+Content-Type: application/json
