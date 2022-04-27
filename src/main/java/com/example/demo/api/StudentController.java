@@ -1,9 +1,9 @@
 package com.example.demo.api;
 
+import com.example.demo.bl.QueueBl;
 import com.example.demo.bl.StudentBl;
 import com.example.demo.dto.StudentDto;
 import com.example.demo.entity.Student;
-import com.example.demo.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +22,26 @@ import java.util.List;
 @RequestMapping("/v1/api/students")
 public class StudentController {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
-    private StudentBl studentBl;
+    private static final Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
+    private final StudentBl studentBl;
+    private final QueueBl queueBl;
 
     @Value("${key}")
     String key;
 
     @Autowired
-    public StudentController(StudentBl studentBl) {
+    public StudentController(StudentBl studentBl, QueueBl queueBl) {
         this.studentBl = studentBl;
+        this.queueBl = queueBl;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
         // Create a new student
         LOGGER.info("Creando estudiante con la siguiente información: {}", student);
-
         Student result = studentBl.saveStudent(student);
+
+        LOGGER.info(queueBl.sendWithDirectExchange(result));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -48,7 +51,7 @@ public class StudentController {
         LOGGER.info("Obteniendo el estudiante con id: {}", id);
 
         Student student = studentBl.getStudentById(id);
-        LOGGER.info("Invocacion exitosa para obtener el estudiante {}", student);
+        LOGGER.info(queueBl.sendWithFanoutExchange(student));
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
@@ -58,7 +61,7 @@ public class StudentController {
         LOGGER.info("Listado general con KEY: {}", key);
 
         List<Student> studentList = studentBl.getStudents();
-        LOGGER.info("Invocacion exitosa para obtener el listado de estudiantes {}", studentList);
+        LOGGER.info(queueBl.sendWithTopicExchange1(studentList.get(0)));
         return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
 
