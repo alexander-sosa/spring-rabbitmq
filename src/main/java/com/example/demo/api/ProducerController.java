@@ -40,7 +40,7 @@ public class ProducerController {
         messageDto.setMessageId(UUID.randomUUID().toString());
         messageDto.setMessageDate(new Date());
         template.convertAndSend(RabbitMqGeneralConfig.TOPIC_EXCHANGE, RabbitMqGeneralConfig.TOPIC_KEY_1, messageDto);
-        return "Topic Exchange 1 message sent!";
+        return "Topic Exchange 1 message sent! (key: " + RabbitMqGeneralConfig.TOPIC_KEY_1 + ")";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/v1/api/topic2")
@@ -48,7 +48,7 @@ public class ProducerController {
         messageDto.setMessageId(UUID.randomUUID().toString());
         messageDto.setMessageDate(new Date());
         template.convertAndSend(RabbitMqGeneralConfig.TOPIC_EXCHANGE, RabbitMqGeneralConfig.TOPIC_KEY_2, messageDto);
-        return "Topic Exchange 2 message sent!";
+        return "Topic Exchange 2 message sent! (key: " + RabbitMqGeneralConfig.TOPIC_KEY_2 + ")";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/v1/api/topic3")
@@ -56,6 +56,6 @@ public class ProducerController {
         messageDto.setMessageId(UUID.randomUUID().toString());
         messageDto.setMessageDate(new Date());
         template.convertAndSend(RabbitMqGeneralConfig.TOPIC_EXCHANGE, RabbitMqGeneralConfig.TOPIC_KEY_3, messageDto);
-        return "Topic Exchange 3 message sent!";
+        return "Topic Exchange 3 message sent! (key: " + RabbitMqGeneralConfig.TOPIC_KEY_3 + ")";
     }
 }
